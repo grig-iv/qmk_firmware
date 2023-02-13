@@ -20,10 +20,20 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
+// Mouse setup
+#define MK_COMBINED
+// 60hz 1600px
+#define MOUSEKEY_INTERVAL 16
+#define MOUSEKEY_MAX_SPEED 3
+// 144hz 2k
+// #define MOUSEKEY_INTERVAL 7
+// #define MOUSEKEY_MAX_SPEED 7
+// #define MOUSEKEY_TIME_TO_MAX 100
+
 //#define USE_MATRIX_I2C
 
 // Tap-hold configuration for home row mods.
-#define TAPPING_TERM 190
+#define TAPPING_TERM 180
 #define IGNORE_MOD_TAP_INTERRUPT
 #define PERMISSIVE_HOLD
 #define TAPPING_FORCE_HOLD_PER_KEY
