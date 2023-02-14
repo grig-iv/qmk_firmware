@@ -22,6 +22,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 // Mouse setup
 #define MK_COMBINED
+
 // 60hz 1600px
 #define MOUSEKEY_INTERVAL 16
 #define MOUSEKEY_MAX_SPEED 3
@@ -30,21 +31,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // #define MOUSEKEY_MAX_SPEED 7
 // #define MOUSEKEY_TIME_TO_MAX 100
 
-//#define USE_MATRIX_I2C
 
-// Tap-hold configuration for home row mods.
 #define TAPPING_TERM 180
-#define IGNORE_MOD_TAP_INTERRUPT
-#define PERMISSIVE_HOLD
-#define TAPPING_FORCE_HOLD_PER_KEY
+#define HOLD_ON_OTHER_KEY_PRESS_PER_KEY
 
 #define MASTER_LEFT
 #define BOTH_SHIFTS_TURNS_ON_CAPS_WORD
-// #define MASTER_RIGHT
-// #define EE_HANDS
-
-//#define TAPPING_FORCE_HOLD
-//#define TAPPING_TERM 100
 
 #ifdef RGBLIGHT_ENABLE
     #define RGBLIGHT_LAYERS

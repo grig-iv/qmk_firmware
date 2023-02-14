@@ -20,27 +20,27 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <stdio.h>
 
 enum layers {
-  COLEMAK_DH,
-  QWERTY,
-  SYM,
-  NUM,
-  ADJUST,
-  NAV,
-  MOUSE,
-  MEDIA,
-  TMUX,
+  _COLEMAK_DH,
+  _QWERTY,
+  _SYM,
+  _NUM,
+  _ADJUST,
+  _NAV,
+  _MOUSE,
+  _MEDIA,
+  _TMUX,
 };
 
 // Thumb row mods
-#define TMB_LL LT(ADJUST, KC_DEL)
-#define TMB_LM KC_BSPC
-#define TMB_LR LT(SYM, KC_ESC)
-#define TMB_RL LT(NUM, KC_ENT)
-#define TMB_RM LT(NAV, KC_SPC)
-#define TMB_RR LT(MOUSE, KC_TAB)
+#define TMB_LL LT(_ADJUST, KC_DEL)
+#define TMB_LM LT(_SYM, KC_BSPC)
+#define TMB_LR LT(_NUM, KC_ESC)
+#define TMB_RL LT(_NUM, KC_ENT)
+#define TMB_RM LT(_NAV, KC_SPC)
+#define TMB_RR LT(_MOUSE, KC_TAB)
 
-#define DF_QWRT DF(QWERTY)
-#define DF_CLMK DF(COLEMAK_DH)
+#define DF_QWRT DF(_QWERTY)
+#define DF_CLMK DF(_COLEMAK_DH)
 
 // Symbols
 #define LCBRC S(KC_LBRC)
@@ -69,16 +69,16 @@ enum layers {
 #define B_SRCH KC_WSCH
 
 // Mouse
-#define L_MOUSE MO(MOUSE)
+#define L_MOUSE MO(_MOUSE)
 
 // Tmux
-#define L_TMUX MO(TMUX)
-#define PREFIX C(KC_A)
-#define N_WIND C(KC_A)
-#define P_WIND KC_WSCH
+#define L_TMUX MO(_TMUX)
+#define TMUX_PREFIX C(KC_A)
+#define N_WIND KC_N
+#define P_WIND KC_P
 
 // Media
-#define L_MEDIA MO(MEDIA)
+#define L_MEDIA MO(_MEDIA)
 
 // Windows
 #define DSK_L G(C(KC_LEFT))
@@ -87,7 +87,7 @@ enum layers {
 
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-  [COLEMAK_DH] = LAYOUT_split_3x6_3(
+  [_COLEMAK_DH] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
       KC_LALT,    KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,                         KC_J,    KC_L,    KC_U,    KC_Y, KC_SCLN, KC_RWIN,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
@@ -99,7 +99,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                       //`--------------------------'  `--------------------------'
   ),
 
-  [QWERTY] = LAYOUT_split_3x6_3(
+  [_QWERTY] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
       KC_LALT,    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                         KC_Y,    KC_U,    KC_I,    KC_O,    KC_P, KC_RWIN,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
@@ -111,7 +111,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                       //`--------------------------'  `--------------------------'
   ),
 
-  [SYM] = LAYOUT_split_3x6_3(
+  [_SYM] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
      _______,  KC_QUOT,  LCBRC,    RCBRC,   TILDE,     XOR,                      S(KC_3), S(KC_4), S(KC_5), S(KC_2), KC_NUBS, _______,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
@@ -123,7 +123,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                       //`--------------------------'  `--------------------------'
   ),
 
-  [NUM] = LAYOUT_split_3x6_3(
+  [_NUM] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
       _______,   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,                        KC_F6,   KC_F7,   KC_F8,   KC_F9,  KC_F10, _______,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
@@ -135,7 +135,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                       //`--------------------------'  `--------------------------'
   ),
 
-  [ADJUST] = LAYOUT_split_3x6_3(
+  [_ADJUST] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
       DF_QWRT, XXXXXXX, XXXXXXX, RGB_VAI, RGB_VAD, RGB_TOG,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
@@ -147,7 +147,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                       //`--------------------------'  `--------------------------'
   ),
 
-  [NAV] = LAYOUT_split_3x6_3(
+  [_NAV] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
       _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                       B_SRCH,  B_OPEN,  B_PREV,  B_NEXT, B_CLOSE, _______,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
@@ -159,7 +159,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                       //`--------------------------'  `--------------------------'
   ),
 
-  [MOUSE] = LAYOUT_split_3x6_3(
+  [_MOUSE] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
       _______, XXXXXXX, KC_ACL0, KC_ACL1, KC_ACL2, XXXXXXX,                      XXXXXXX, XXXXXXX, KC_BTN5, KC_BTN4, XXXXXXX, _______,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
@@ -171,7 +171,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                       //`--------------------------'  `--------------------------'
   ),
 
-  [MEDIA] = LAYOUT_split_3x6_3(
+  [_MEDIA] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
       _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, KC_MPLY, KC_MNXT, KC_MNXT, KC_MSTP, _______,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
@@ -183,7 +183,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                       //`--------------------------'  `--------------------------'
   ),
 
-  [TMUX] = LAYOUT_split_3x6_3(
+  [_TMUX] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
       _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX,  P_WIND,  N_WIND, XXXXXXX, _______,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
@@ -196,6 +196,23 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 };
 
+bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case TMB_LM:
+        case TMB_RM:
+            return true;
+        default:
+            return false;
+    }
+}
+
+bool process_record_user(uint16_t keycode, keyrecord_t* record) {
+    if (layer_state_is(_TMUX) && record->event.pressed) {
+        tap_code16(TMUX_PREFIX);
+    }
+
+    return true;
+}
 
 #ifdef OLED_ENABLE
 oled_rotation_t oled_init_user(oled_rotation_t rotation) {
@@ -234,28 +251,6 @@ void oled_render_layer_state(void) {
 
 char keylog_str[24] = {};
 
-const char code_to_name[60] = {
-    ' ', ' ', ' ', ' ', 'a', 'b', 'c', 'd', 'e', 'f',
-    'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p',
-    'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
-    '1', '2', '3', '4', '5', '6', '7', '8', '9', '0',
-    'R', 'E', 'B', 'T', '_', '-', '=', '[', ']', '\\',
-    '#', ';', '\'', '`', ',', '.', '/', ' ', ' ', ' '};
-
-void set_keylog(uint16_t keycode, keyrecord_t *record) {
-  char name = ' ';
-    if ((keycode >= QK_MOD_TAP && keycode <= QK_MOD_TAP_MAX) ||
-        (keycode >= QK_LAYER_TAP && keycode <= QK_LAYER_TAP_MAX)) { keycode = keycode & 0xFF; }
-  if (keycode < 60) {
-    name = code_to_name[keycode];
-  }
-
-  // update keylog
-  snprintf(keylog_str, sizeof(keylog_str), "%dx%d, k%2d : %c",
-           record->event.key.row, record->event.key.col,
-           keycode, name);
-}
-
 void oled_render_keylog(void) {
     oled_write(keylog_str, false);
 }
@@ -277,7 +272,7 @@ void render_bootmagic_status(bool status) {
 
 void oled_render_logo(void) {
     static const char PROGMEM crkbd_logo[] = {
-        0x80, 0x81, 0x82, 0x83, 0x84, 0x85, 0x86, 0x87, 0x88, 0x89, 0x8a, 0x8b, 0x8c, 0x8d, 0x8e, 0x8f, 0x90, 0x91, 0x92, 0x93, 0x94,
+        0x80, 0x81, 0x82, 0x83, 0x80, 0x85, 0x86, 0x87, 0x88, 0x89, 0x8a, 0x8b, 0x8c, 0x8d, 0x8e, 0x8f, 0x90, 0x91, 0x92, 0x93, 0x94,
         0xa0, 0xa1, 0xa2, 0xa3, 0xa4, 0xa5, 0xa6, 0xa7, 0xa8, 0xa9, 0xaa, 0xab, 0xac, 0xad, 0xae, 0xaf, 0xb0, 0xb1, 0xb2, 0xb3, 0xb4,
         0xc0, 0xc1, 0xc2, 0xc3, 0xc4, 0xc5, 0xc6, 0xc7, 0xc8, 0xc9, 0xca, 0xcb, 0xcc, 0xcd, 0xce, 0xcf, 0xd0, 0xd1, 0xd2, 0xd3, 0xd4,
         0};
@@ -292,12 +287,5 @@ bool oled_task_user(void) {
         oled_render_logo();
     }
     return false;
-}
-
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-  if (record->event.pressed) {
-    set_keylog(keycode, record);
-  }
-  return true;
 }
 #endif // OLED_ENABLE
