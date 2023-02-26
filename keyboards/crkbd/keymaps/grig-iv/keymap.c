@@ -31,12 +31,12 @@ enum layers {
 };
 
 // Thumb row mods
-#define TMB_LL LT(_NUM, KC_DEL)
+#define TMB_LL LT(_MOUSE, KC_DEL)
 #define TMB_LM LT(_SYM, KC_BSPC)
 #define TMB_LR LCTL_T(KC_ESC)
-#define TMB_RL RCTL_T(KC_ENT)
+#define TMB_RL LT(_NUM, KC_ENT)
 #define TMB_RM LT(_NAV, KC_SPC)
-#define TMB_RR LT(_MOUSE, KC_TAB)
+#define TMB_RR RCTL_T(KC_TAB)
 
 #define DF_QWRT DF(_QWERTY)
 #define DF_CLMK DF(_COLEMAK_DH)
@@ -72,7 +72,7 @@ enum layers {
 
 // Tmux
 #define L_TMUX MO(_TMUX)
-#define TMUX_PREFIX C(KC_A)
+#define TMUX_PREFIX C(KC_B)
 #define N_WIND KC_N
 #define P_WIND KC_P
 
@@ -140,7 +140,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       _______, XXXXXXX, XXXXXXX, XXXXXXX,  L_TMUX, XXXXXXX,                      XXXXXXX, KC_LEFT,   KC_UP, KC_DOWN, KC_RGHT, _______,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                       KC_INS, KC_HOME, KC_PGUP, KC_PGDN,  KC_END, _______,
+      _______, XXXXXXX, XXXXXXX, XXXXXXX, L_MEDIA, XXXXXXX,                       KC_INS, KC_HOME, KC_PGUP, KC_PGDN,  KC_END, _______,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                           _______, _______, _______,    _______, _______, _______
                                       //`--------------------------'  `--------------------------'
@@ -148,11 +148,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_MOUSE] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-      _______, KC_ACL2, XXXXXXX, KC_BTN3, XXXXXXX, XXXXXXX,                      XXXXXXX, KC_WH_U, KC_MS_U, KC_WH_D, XXXXXXX, _______,
+      _______, KC_ACL2, XXXXXXX, KC_MS_U, XXXXXXX, XXXXXXX,                      XXXXXXX, KC_BTN4, KC_BTN3, XXXXXXX, KC_BTN5, _______,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      _______, KC_ACL1, KC_BTN4, KC_BTN2, KC_BTN1, KC_BTN5,                      KC_WH_L, KC_MS_L, KC_MS_D, KC_MS_R, KC_WH_R, _______,
+      _______, KC_ACL1, KC_MS_L, KC_MS_D, KC_MS_R, XXXXXXX,                      XXXXXXX, KC_BTN1, KC_BTN2, XXXXXXX, XXXXXXX, _______,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      _______, KC_ACL0, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
+      _______, KC_ACL0, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, KC_WH_L, KC_WH_U, KC_WH_D, KC_WH_R, _______,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                           _______, _______, _______,    _______, _______, _______
                                       //`--------------------------'  `--------------------------'
@@ -160,7 +160,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_MEDIA] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-      _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, KC_MPLY, KC_MNXT, KC_MNXT, KC_MSTP, _______,
+      _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, KC_MNXT, KC_MNXT, XXXXXXX, _______,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      KC_MUTE, KC_MFFD, KC_VOLU, KC_VOLD, KC_MRWD, _______,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
@@ -190,9 +190,6 @@ combo_t key_combos[COMBO_COUNT] = {
 
 bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        case TMB_RM:
-        case TMB_RR:
-            return false;
         default:
             return true;
     }
