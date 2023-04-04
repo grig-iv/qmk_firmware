@@ -109,5 +109,5 @@ compile_commands.json
 via*.json
 
 # exclude all keyboards except crkbd
-/keyboards
+/keyboards/*
 !/keyboards/crkbd
