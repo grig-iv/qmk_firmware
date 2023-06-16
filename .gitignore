@@ -1,3 +1,7 @@
+# Grig
+keyboards/*
+!keyboards/crkbd
+
 # Junk files
 *.bak
 *.swp
