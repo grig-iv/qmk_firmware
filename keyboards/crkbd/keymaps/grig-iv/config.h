@@ -24,12 +24,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define MK_COMBINED
 
 // 60hz 1600px
-// #define MOUSEKEY_INTERVAL 16
-// #define MOUSEKEY_MAX_SPEED 3
+#define MOUSEKEY_INTERVAL 16
+#define MOUSEKEY_MAX_SPEED 3
 // 144hz 2k
-#define MOUSEKEY_INTERVAL 7
-#define MOUSEKEY_MAX_SPEED 7
-#define MOUSEKEY_TIME_TO_MAX 100
+// #define MOUSEKEY_INTERVAL 7
+// #define MOUSEKEY_MAX_SPEED 7
+// #define MOUSEKEY_TIME_TO_MAX 100
 
 
 #define TAPPING_TERM 180
