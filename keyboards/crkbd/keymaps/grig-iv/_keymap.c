@@ -25,20 +25,20 @@ enum layers {
   _SYM,
   _NUM,
   _NAV,
+  _USR,
+  _USR_NAV,
   _MOUSE,
   _MEDIA,
-  _TMUX,
+ _TMUX,
 };
 
 // Thumb row mods
-#define TMB_LL LT(0, KC_DEL)
+#define TMB_LL LT(_USR, KC_DEL)
 #define TMB_LM LT(_SYM, KC_BSPC)
 #define TMB_LR LCTL_T(KC_ESC)
 #define TMB_RL LT(_NUM, KC_ENT)
 #define TMB_RM LT(_NAV, KC_SPC)
 #define TMB_RR LT(_MOUSE, KC_TAB)
-
-#define MOD_USR TMB_LL
 
 #define DF_QWRT DF(_QWERTY)
 #define DF_CLMK DF(_COLEMAK_DH)
@@ -82,6 +82,8 @@ enum layers {
 #define L_MEDIA MO(_MEDIA)
 
 // User mod space
+#define L_USR MO(_USR)
+#define L_USR_NAV LT(_USR_NAV, KC_SPC)
 #define RT_LT   XXXXXXX
 #define PRV_LT  XXXXXXX
 #define NXT_LT  XXXXXXX
@@ -152,15 +154,51 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                       //`--------------------------'  `--------------------------'
   ),
 
-  [_NAV] = LAYOUT_split_3x6_3(
+  [_USR] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-      _______, _______, _______, _______, _______, _______,                       B_SRCH,  B_BACK,  B_PREV,  B_NEXT,  B_FWRD, _______,
+      _______, _______, _______, _______, _______, _______,                      _______, _______, _______, _______, _______, _______,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      _______, _______, _______, _______,  L_TMUX, _______,                      _______, KC_LEFT,   KC_UP, KC_DOWN, KC_RGHT, _______,
+      _______, _______, _______, _______, _______, _______,                      _______, _______, _______, _______, _______, _______,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      _______, _______, _______, _______, L_MEDIA, _______,                       KC_INS, KC_HOME, KC_PGUP, KC_PGDN,  KC_END, _______,
+      _______, _______, _______, _______, _______, _______,                      _______, _______, _______, _______, _______, _______,
+  //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
+                                          _______, _______, _______,   _______, L_USR_NAV, _______
+                                      //`--------------------------'  `--------------------------'
+  ),
+
+  [_USR_NAV] = LAYOUT_split_3x6_3(
+  //,-----------------------------------------------------.                    ,-----------------------------------------------------.
+      _______, XXXXXXX,  WS_WEB, XXXXXXX, XXXXXXX, XXXXXXX,                        RT_LT,  PRV_LT,  PRV_WS,  NXT_WS, NXT_LT,  _______,
+  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
+      _______, XXXXXXX, XXXXXXX,  WS_SYS, XXXXXXX, XXXXXXX,                      FCS_MST, PRV_SCR, PRV_WND, NXT_WND, NXT_SCR, _______,
+  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
+      _______, XXXXXXX, XXXXXXX,  WS_CHT,  WS_DEV,   WS_VM,                       RST_LT, XXXXXXX,    SRNK,   EXPND, XXXXXXX, _______,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                           _______, _______, _______,    _______, _______, _______
+                                      //`--------------------------'  `--------------------------'
+  ),
+
+  [_MOUSE] = LAYOUT_split_3x6_3(
+  //,-----------------------------------------------------.                    ,-----------------------------------------------------.
+      XXXXXXX, KC_BTN4, KC_BTN3, XXXXXXX, KC_BTN5, _______,                      KC_ACL2, XXXXXXX, KC_MS_U, XXXXXXX, XXXXXXX, XXXXXXX,
+  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
+      XXXXXXX, XXXXXXX, KC_BTN2, KC_BTN1, XXXXXXX, _______,                      KC_ACL1, KC_MS_L, KC_MS_D, KC_MS_R, KC_MS_R, XXXXXXX,
+  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
+      XXXXXXX, KC_WH_L, KC_WH_U, KC_WH_D, KC_WH_R, _______,                      KC_ACL0, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+  //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
+                                          _______, _______, _______,    _______, _______, _______
+                                      //`--------------------------'  `--------------------------'
+  ),
+
+  [_NAV] = LAYOUT_split_3x6_3(
+  //,-----------------------------------------------------.                    ,-----------------------------------------------------.
+      _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                       B_SRCH,  B_BACK,  B_PREV,  B_NEXT,  B_FWRD, _______,
+  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
+      _______, XXXXXXX, XXXXXXX, XXXXXXX,  L_TMUX, XXXXXXX,                      XXXXXXX, KC_LEFT,   KC_UP, KC_DOWN, KC_RGHT, _______,
+  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
+      _______, XXXXXXX, XXXXXXX, XXXXXXX, L_MEDIA, XXXXXXX,                       KC_INS, KC_HOME, KC_PGUP, KC_PGDN,  KC_END, _______,
+  //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
+                                        L_USR_NAV, _______, _______,    _______, _______, _______
                                       //`--------------------------'  `--------------------------'
   ),
 
@@ -187,18 +225,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                           _______, _______, _______,    _______, _______, _______
                                       //`--------------------------'  `--------------------------'
   ),
-
-  [_MOUSE] = LAYOUT_split_3x6_3(
-  //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-      XXXXXXX, KC_BTN4, KC_BTN3, XXXXXXX, KC_BTN5, _______,                      KC_ACL2, XXXXXXX, KC_MS_U, XXXXXXX, XXXXXXX, XXXXXXX,
-  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      XXXXXXX, XXXXXXX, KC_BTN2, KC_BTN1, XXXXXXX, _______,                      KC_ACL1, KC_MS_L, KC_MS_D, KC_MS_R, KC_MS_R, XXXXXXX,
-  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      XXXXXXX, KC_WH_L, KC_WH_U, KC_WH_D, KC_WH_R, _______,                      KC_ACL0, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-  //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          _______, _______, _______,    _______, _______, _______
-                                      //`--------------------------'  `--------------------------'
-  ),
 };
 
 
@@ -207,51 +233,20 @@ combo_t key_combos[COMBO_COUNT] = {
     COMBO(leader_key_combo, QK_LEAD),
 };
 
+layer_state_t layer_state_set_user(layer_state_t state) {
+    static bool is_usr_layers_on = false;
+    if (!is_usr_layers_on && (layer_state_cmp(state, _USR) || layer_state_cmp(state, _USR_NAV))) {
+        register_code(KC_LGUI);
+        is_usr_layers_on = true;
+    } else if (is_usr_layers_on && !layer_state_cmp(state, _USR) && !layer_state_cmp(state, _USR_NAV)) {
+        unregister_code(KC_LGUI);
+        is_usr_layers_on = false;
+    }
 
-bool handle_as(uint16_t new_key, keyrecord_t *record) {
-  if (record->event.pressed) {
-    register_code(new_key);
-  } else {
-    unregister_code(new_key);
-  }
-
-  return false;
+    return state;
 }
 
 bool process_record_user(uint16_t keycode, keyrecord_t* record) {
-    static bool is_usr_mod_on = false;
-    if (keycode == MOD_USR) {
-        if (!is_usr_mod_on && !record->tap.count && record->event.pressed) {
-            register_code(KC_LGUI);
-            is_usr_mod_on = true;
-            return false;
-        } else if (is_usr_mod_on && !record->event.pressed) {
-            unregister_code(KC_LGUI);
-            is_usr_mod_on = false;
-            return false;
-        }
-    }
-
-    if (is_usr_mod_on && layer_state_is(_NAV)) {
-      switch (keycode) {
-        case B_PREV:
-          return handle_as(PRV_WS, record);
-        case B_NEXT:
-          return handle_as(NXT_WS, record);
-
-        case L_MEDIA:
-          return handle_as(WS_DEV, record);
-        case KC_W:
-          return handle_as(WS_WEB, record);
-        case KC_S:
-          return handle_as(WS_SYS, record);
-        case KC_C:
-          return handle_as(WS_CHT, record);
-        case KC_V:
-          return handle_as(WS_VM, record);
-      }
-    }
-
     if (layer_state_is(_TMUX) && record->event.pressed) {
         tap_code16(TMUX_PREFIX);
     }
