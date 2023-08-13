@@ -1,21 +1,3 @@
-/*
-Copyright 2019 @foostan
-Copyright 2020 Drashna Jaelre <@drashna>
-
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 2 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
-
 #include QMK_KEYBOARD_H
 #include <stdio.h>
 
@@ -36,7 +18,7 @@ enum layers {
 #define TMB_LR LCTL_T(KC_ESC)
 #define TMB_RL LT(_NUM, KC_ENT)
 #define TMB_RM LT(_NAV, KC_SPC)
-#define TMB_RR LT(_MOUSE, KC_TAB)
+#define TMB_RR ALGR_T(KC_TAB)
 
 #define MOD_USR TMB_LL
 
@@ -160,7 +142,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       _______, _______, _______, _______, L_MEDIA, _______,                       KC_INS, KC_HOME, KC_PGUP, KC_PGDN,  KC_END, _______,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          _______, _______, _______,    _______, _______, _______
+                                          _______, L_MOUSE, _______,    _______, _______, _______
                                       //`--------------------------'  `--------------------------'
   ),
 
@@ -201,55 +183,67 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 };
 
+static bool is_usr_mod_on = false;
+static bool is_linux_sysetm = false;
 
-const uint16_t PROGMEM leader_key_combo[] = {TMB_LR, TMB_RL, COMBO_END};
-combo_t key_combos[COMBO_COUNT] = {
-    COMBO(leader_key_combo, QK_LEAD),
-};
+void activate_user_mod(void){
+    if (is_linux_sysetm) {
+        register_code(KC_LGUI);
+    } else {
+        register_code(KC_LCTL);
+        register_code(KC_LGUI);
+    }
+    is_usr_mod_on = true;
+}
 
+void deactivate_user_mod(void){
+    if (is_linux_sysetm) {
+        unregister_code(KC_LGUI);
+    } else {
+        unregister_code(KC_LGUI);
+        unregister_code(KC_LCTL);
+    }
+    is_usr_mod_on = false;
+}
 
 bool handle_as(uint16_t new_key, keyrecord_t *record) {
-  if (record->event.pressed) {
-    register_code(new_key);
-  } else {
-    unregister_code(new_key);
-  }
+    if (record->event.pressed) {
+        register_code(new_key);
+    } else {
+        unregister_code(new_key);
+    }
 
-  return false;
+    return false;
 }
 
 bool process_record_user(uint16_t keycode, keyrecord_t* record) {
-    static bool is_usr_mod_on = false;
     if (keycode == MOD_USR) {
         if (!is_usr_mod_on && !record->tap.count && record->event.pressed) {
-            register_code(KC_LGUI);
-            is_usr_mod_on = true;
+            activate_user_mod();
             return false;
         } else if (is_usr_mod_on && !record->event.pressed) {
-            unregister_code(KC_LGUI);
-            is_usr_mod_on = false;
+            deactivate_user_mod();
             return false;
         }
     }
 
     if (is_usr_mod_on && layer_state_is(_NAV)) {
-      switch (keycode) {
-        case B_PREV:
-          return handle_as(PRV_WS, record);
-        case B_NEXT:
-          return handle_as(NXT_WS, record);
-
-        case L_MEDIA:
-          return handle_as(WS_DEV, record);
-        case KC_W:
-          return handle_as(WS_WEB, record);
-        case KC_S:
-          return handle_as(WS_SYS, record);
-        case KC_C:
-          return handle_as(WS_CHT, record);
-        case KC_V:
-          return handle_as(WS_VM, record);
-      }
+        switch (keycode) {
+            case B_PREV:
+                return handle_as(PRV_WS, record);
+            case B_NEXT:
+                return handle_as(NXT_WS, record);
+            case L_MEDIA:
+                return handle_as(WS_DEV, record);
+            case KC_W:
+                return handle_as(WS_WEB, record);
+            case KC_S:
+                return handle_as(WS_SYS, record);
+            case KC_C:
+                return handle_as(WS_CHT, record);
+            case KC_V:
+                return handle_as(WS_VM, record);
+        }
     }
 
     if (layer_state_is(_TMUX) && record->event.pressed) {
@@ -266,31 +260,47 @@ bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
     }
 }
 
+
+const uint16_t PROGMEM leader_key_combo[] = {TMB_LR, TMB_RL, COMBO_END};
+combo_t key_combos[COMBO_COUNT] = {
+    COMBO(leader_key_combo, QK_LEAD),
+};
+
 LEADER_EXTERNS();
 
 void matrix_scan_user(void) {
-  LEADER_DICTIONARY() {
-    leading = false;
-    leader_end();
+    LEADER_DICTIONARY() {
+        leading = false;
+        leader_end();
 
-    // Change Layout Qwerty
-    SEQ_THREE_KEYS(KC_C, KC_L, KC_Q) {
-        default_layer_set(1U << _QWERTY);
-    }
+        // [L]ayout [Q]werty
+        SEQ_TWO_KEYS(KC_L, KC_Q) {
+            default_layer_set(1U << _QWERTY);
+        }
 
-    // Change Layout Colemak
-    SEQ_THREE_KEYS(KC_C, KC_L, KC_C) {
-        default_layer_set(1U << _COLEMAK_DH);
+        // [L]ayout [C]olemak
+        SEQ_TWO_KEYS(KC_L, KC_C) {
+            default_layer_set(1U << _COLEMAK_DH);
+        }
+
+        // [S]ystem [L]inux
+        SEQ_TWO_KEYS(KC_S, KC_L) {
+            is_linux_sysetm = true;
+        }
+
+        // [S]ystem [W]indows
+        SEQ_TWO_KEYS(KC_S, KC_W) {
+            is_linux_sysetm = false;
+        }
     }
-  }
 }
 
 #ifdef OLED_ENABLE
 oled_rotation_t oled_init_user(oled_rotation_t rotation) {
-  if (!is_keyboard_master()) {
-    return OLED_ROTATION_180;  // flips the display 180 degrees if offhand
-  }
-  return rotation;
+    if (!is_keyboard_master()) {
+        return OLED_ROTATION_180;  // flips the display 180 degrees if offhand
+    }
+    return rotation;
 }
 
 #define L_BASE 0
