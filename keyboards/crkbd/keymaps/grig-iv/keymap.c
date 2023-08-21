@@ -7,6 +7,8 @@ enum layers {
   _SYM,
   _NUM,
   _NAV,
+  _WEB,
+  _QMK,
   _MOUSE,
   _MEDIA,
   _TMUX,
@@ -59,6 +61,12 @@ enum layers {
 #define TMUX_PREFIX C(KC_B)
 #define N_WIND KC_N
 #define P_WIND KC_P
+
+// Web
+#define L_WEB MO(_WEB)
+
+// Qmk
+#define L_QMK MO(_QMK)
 
 // Media
 #define L_MEDIA MO(_MEDIA)
@@ -136,13 +144,37 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_NAV] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-      _______, _______, _______, _______, _______, _______,                       B_SRCH,  B_BACK,  B_PREV,  B_NEXT,  B_FWRD, _______,
+      _______,   L_QMK,   L_WEB, _______, _______, _______,                       KC_F13,  KC_F14,  B_PREV,  B_NEXT,  KC_F17, _______,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      _______, _______, _______, _______,  L_TMUX, _______,                      _______, KC_LEFT,   KC_UP, KC_DOWN, KC_RGHT, _______,
+      _______, _______, _______, _______,  L_TMUX, _______,                       KC_F18, KC_LEFT,   KC_UP, KC_DOWN, KC_RGHT, _______,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       _______, _______, _______, _______, L_MEDIA, _______,                       KC_INS, KC_HOME, KC_PGUP, KC_PGDN,  KC_END, _______,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                           _______, L_MOUSE, _______,    _______, _______, _______
+                                      //`--------------------------'  `--------------------------'
+  ),
+
+  [_WEB] = LAYOUT_split_3x6_3(
+  //,-----------------------------------------------------.                    ,-----------------------------------------------------.
+      _______, XXXXXXX, _______, XXXXXXX, XXXXXXX, XXXXXXX,                       B_SRCH,  B_BACK,  B_PREV,  B_NEXT,  B_FWRD, _______,
+  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
+      _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
+  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
+      _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
+  //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
+                                          _______, _______, _______,    _______, _______, _______
+                                      //`--------------------------'  `--------------------------'
+  ),
+
+  [_QMK] = LAYOUT_split_3x6_3(
+  //,-----------------------------------------------------.                    ,-----------------------------------------------------.
+      _______, _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, RGB_HUI, RGB_HUD, XXXXXXX, _______,
+  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
+      _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX,RGB_RMOD, RGB_SAI, RGB_SAD, RGB_MOD, _______,
+  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
+      _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      RGB_TOG, XXXXXXX, RGB_VAI, RGB_VAD, XXXXXXX, _______,
+  //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
+                                          _______, _______, _______,    _______, _______, _______
                                       //`--------------------------'  `--------------------------'
   ),
 
@@ -172,16 +204,22 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_MOUSE] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-      XXXXXXX, KC_BTN4, KC_BTN3, XXXXXXX, KC_BTN5, _______,                      KC_ACL2, XXXXXXX, KC_MS_U, XXXXXXX, XXXXXXX, XXXXXXX,
+      _______, KC_BTN4, KC_BTN3, XXXXXXX, KC_BTN5, XXXXXXX,                      KC_ACL2, KC_WH_U, KC_MS_U, KC_WH_D, XXXXXXX, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      XXXXXXX, XXXXXXX, KC_BTN2, KC_BTN1, XXXXXXX, _______,                      KC_ACL1, KC_MS_L, KC_MS_D, KC_MS_R, KC_MS_R, XXXXXXX,
+      _______, XXXXXXX, XXXXXXX, KC_BTN2, KC_BTN1, XXXXXXX,                      KC_ACL1, KC_MS_L, KC_MS_D, KC_MS_R, XXXXXXX, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      XXXXXXX, KC_WH_L, KC_WH_U, KC_WH_D, KC_WH_R, _______,                      KC_ACL0, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+      _______, KC_WH_L, KC_WH_U, KC_WH_D, KC_WH_R, XXXXXXX,                      KC_ACL0, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                           _______, _______, _______,    _______, _______, _______
                                       //`--------------------------'  `--------------------------'
   ),
 };
+
+void keyboard_post_init_user(void) {
+    // Set Num Lock on at startup
+    register_code(KC_NUM);
+    unregister_code(KC_NUM);
+}
 
 static bool is_usr_mod_on = false;
 static bool is_linux_sysetm = false;
@@ -190,7 +228,7 @@ void activate_user_mod(void){
     if (is_linux_sysetm) {
         register_code(KC_LGUI);
     } else {
-        register_code(KC_LCTL);
+        register_code(KC_LALT);
         register_code(KC_LGUI);
     }
     is_usr_mod_on = true;
@@ -201,7 +239,7 @@ void deactivate_user_mod(void){
         unregister_code(KC_LGUI);
     } else {
         unregister_code(KC_LGUI);
-        unregister_code(KC_LCTL);
+        unregister_code(KC_LALT);
     }
     is_usr_mod_on = false;
 }

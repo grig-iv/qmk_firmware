@@ -32,6 +32,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // #define MOUSEKEY_TIME_TO_MAX 100
 
 
+
 #define TAPPING_TERM 180
 #define HOLD_ON_OTHER_KEY_PRESS_PER_KEY
 #define IGNORE_MOD_TAP_INTERRUPT_PER_KEY

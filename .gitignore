@@ -1,6 +1,8 @@
 # Grig
 keyboards/*
 !keyboards/crkbd
+keyboards/crkbd/keymaps/*
+!keyboards/crkbd/keymaps/grig-iv
 
 # Junk files
 *.bak
