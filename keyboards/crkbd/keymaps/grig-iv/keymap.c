@@ -86,11 +86,11 @@ enum layers {
 #define SRNK    XXXXXXX
 #define EXPND   XXXXXXX
 
-#define WS_DEV KC_1
-#define WS_WEB KC_2
+#define WS_WEB KC_1
+#define WS_DEV KC_2
 #define WS_SYS KC_3
 #define WS_CHT KC_4
-#define WS_VM  KC_5
+#define WS_MND KC_5
 
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -273,14 +273,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
                 return handle_as(NXT_WS, record);
             case L_MEDIA:
                 return handle_as(WS_DEV, record);
-            case KC_W:
+            case L_WEB:
                 return handle_as(WS_WEB, record);
             case KC_S:
                 return handle_as(WS_SYS, record);
             case KC_C:
                 return handle_as(WS_CHT, record);
-            case KC_V:
-                return handle_as(WS_VM, record);
+            case KC_B:
+                return handle_as(WS_MND, record);
         }
     }
 
