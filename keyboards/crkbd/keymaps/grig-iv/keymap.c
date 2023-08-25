@@ -75,11 +75,11 @@ enum layers {
 #define RT_LT   XXXXXXX
 #define PRV_LT  XXXXXXX
 #define NXT_LT  XXXXXXX
-#define PRV_WS  KC_PGUP
-#define NXT_WS  KC_PGDN
+#define PRV_WS  KC_LBRC
+#define NXT_WS  KC_RBRC
 #define FCS_MST KC_M
-#define PRV_WND KC_UP
-#define NXT_WND KC_DOWN
+#define PRV_WND KC_COMM
+#define NXT_WND KC_DOT
 #define PRV_SCR KC_LEFT
 #define NXT_SCR KC_RGHT
 #define RST_LT  XXXXXXX
@@ -92,15 +92,17 @@ enum layers {
 #define WS_CHT KC_4
 #define WS_MND KC_5
 
+// Language Change
+#define CH_LN LALT(KC_LSFT)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_COLEMAK_DH] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-      KC_LWIN,    KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,                         KC_J,    KC_L,    KC_U,    KC_Y, KC_SCLN, KC_RWIN,
+      KC_LWIN,    KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,                         KC_J,    KC_L,    KC_U,    KC_Y,   CH_LN, KC_RWIN,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       KC_LSFT,    KC_A,    KC_R,    KC_S,    KC_T,    KC_G,                         KC_M,    KC_N,    KC_E,    KC_I,    KC_O, KC_RSFT,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_LALT,    KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,                         KC_K,    KC_H, KC_COMM,  KC_DOT, KC_SLSH, KC_RALT,
+      KC_LALT,    KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,                         KC_K,    KC_H, KC_COMM,  KC_DOT, KC_SLSH, KC_RCTL,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                             TMB_LL, TMB_LM,  TMB_LR,     TMB_RL,  TMB_RM,  TMB_RR
                                       //`--------------------------'  `--------------------------'
@@ -204,11 +206,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_MOUSE] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-      _______, KC_BTN4, KC_BTN3, XXXXXXX, KC_BTN5, XXXXXXX,                      KC_ACL2, KC_WH_U, KC_MS_U, KC_WH_D, XXXXXXX, XXXXXXX,
+      _______, XXXXXXX, XXXXXXX, KC_MS_U, XXXXXXX, XXXXXXX,                      KC_ACL2, KC_BTN4, KC_BTN3, XXXXXXX, KC_BTN5, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      _______, XXXXXXX, XXXXXXX, KC_BTN2, KC_BTN1, XXXXXXX,                      KC_ACL1, KC_MS_L, KC_MS_D, KC_MS_R, XXXXXXX, XXXXXXX,
+      _______, XXXXXXX, KC_MS_L, KC_MS_D, KC_MS_R, XXXXXXX,                      KC_ACL1, KC_BTN1, KC_BTN2, XXXXXXX, XXXXXXX, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      _______, KC_WH_L, KC_WH_U, KC_WH_D, KC_WH_R, XXXXXXX,                      KC_ACL0, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+      _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      KC_ACL0, KC_WH_L, KC_WH_U, KC_WH_D, KC_WH_R, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                           _______, _______, _______,    _______, _______, _______
                                       //`--------------------------'  `--------------------------'
@@ -271,6 +273,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
                 return handle_as(PRV_WS, record);
             case B_NEXT:
                 return handle_as(NXT_WS, record);
+            case KC_UP:
+                return handle_as(PRV_WND, record);
+            case KC_DOWN:
+                return handle_as(NXT_WND, record);
             case L_MEDIA:
                 return handle_as(WS_DEV, record);
             case L_WEB:
