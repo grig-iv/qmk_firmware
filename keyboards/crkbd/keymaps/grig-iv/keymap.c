@@ -1,6 +1,10 @@
 #include QMK_KEYBOARD_H
 #include <stdio.h>
 
+enum custom_keycodes {
+    CH_LANG = SAFE_RANGE
+};
+
 enum layers {
   _COLEMAK_DH,
   _QWERTY,
@@ -47,8 +51,8 @@ enum layers {
 #define ASTR S(KC_8)
 
 // Nav
-#define B_PREV C(S(KC_TAB))
-#define B_NEXT C(KC_TAB)
+#define B_PREV C(KC_PGUP)
+#define B_NEXT C(KC_PGDN)
 #define B_FWRD KC_WFWD
 #define B_BACK KC_WBAK
 #define B_SRCH KC_WSCH
@@ -92,13 +96,11 @@ enum layers {
 #define WS_CHT KC_4
 #define WS_MND KC_5
 
-// Language Change
-#define CH_LN LALT(KC_LSFT)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_COLEMAK_DH] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-      KC_LWIN,    KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,                         KC_J,    KC_L,    KC_U,    KC_Y,   CH_LN, KC_RWIN,
+      KC_LWIN,    KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,                         KC_J,    KC_L,    KC_U,    KC_Y,   CH_LANG, KC_RWIN,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       KC_LSFT,    KC_A,    KC_R,    KC_S,    KC_T,    KC_G,                         KC_M,    KC_N,    KC_E,    KC_I,    KC_O, KC_RSFT,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
@@ -257,6 +259,7 @@ bool handle_as(uint16_t new_key, keyrecord_t *record) {
 }
 
 bool process_record_user(uint16_t keycode, keyrecord_t* record) {
+    // user mode activation
     if (keycode == MOD_USR) {
         if (!is_usr_mod_on && !record->tap.count && record->event.pressed) {
             activate_user_mod();
@@ -267,7 +270,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
         }
     }
 
-    if (is_usr_mod_on && layer_state_is(_NAV)) {
+    // user mode navigation
+    if (is_usr_mod_on && layer_state_is(_NAV) && !is_linux_sysetm) {
         switch (keycode) {
             case B_PREV:
                 return handle_as(PRV_WS, record);
@@ -290,6 +294,21 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
         }
     }
 
+    // language change
+    switch (keycode) {
+        case CH_LANG:
+            if (record->event.pressed) {
+                register_code(KC_LALT);
+                wait_ms(10);
+                register_code(KC_LSFT);
+            } else {
+                unregister_code(KC_LSFT);
+                unregister_code(KC_LALT);
+            }
+            return false;
+    }
+
+    // tmux prefix
     if (layer_state_is(_TMUX) && record->event.pressed) {
         tap_code16(TMUX_PREFIX);
     }

@@ -37,7 +37,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define HOLD_ON_OTHER_KEY_PRESS_PER_KEY
 #define IGNORE_MOD_TAP_INTERRUPT_PER_KEY
 
-#define MASTER_LEFT
+#define MASTER_RIGHT
 #define BOTH_SHIFTS_TURNS_ON_CAPS_WORD
 
 #define LEADER_TIMEOUT 250
