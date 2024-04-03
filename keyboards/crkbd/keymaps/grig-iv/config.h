@@ -41,9 +41,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define LEADER_TIMEOUT 250
 #define LEADER_PER_KEY_TIMING
 
-#define COMBO_COUNT 1
-#define EXTRA_LONG_COMBOS
-
 #ifdef RGBLIGHT_ENABLE
     #define RGBLIGHT_LAYERS
     #define RGBLIGHT_EFFECT_BREATHING
