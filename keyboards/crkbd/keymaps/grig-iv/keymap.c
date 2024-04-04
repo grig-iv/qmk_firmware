@@ -10,11 +10,9 @@ enum layers {
   _SYM,
   _NUM,
   _NAV,
-  _WEB,
   _QMK,
   _MOUSE,
   _MEDIA,
-  _TMUX,
 };
 
 // Thumb row mods
@@ -66,9 +64,6 @@ enum layers {
 
 // Mouse
 #define L_MOUSE MO(_MOUSE)
-
-// Web
-#define L_WEB MO(_WEB)
 
 // Qmk
 #define L_QMK MO(_QMK)
@@ -137,25 +132,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_NAV] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-      _______,   L_QMK,   L_WEB, _______, _______, _______,                       KC_F18,  B_BACK,  B_PREV,  B_NEXT,  B_FWRD,  KC_ESC,
+      _______,   L_QMK, _______, _______, _______, _______,                       KC_F18,  B_BACK,  B_PREV,  B_NEXT,  B_FWRD, _______,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       _______, _______, _______, _______, _______, _______,                       KC_F24, KC_LEFT,   KC_UP, KC_DOWN, KC_RGHT, _______,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       _______, _______, _______, _______, L_MEDIA, _______,                       KC_INS, KC_HOME, KC_PGUP, KC_PGDN,  KC_END, _______,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                           _______, L_MOUSE, _______,    _______, _______, _______
-                                      //`--------------------------'  `--------------------------'
-  ),
-
-  [_WEB] = LAYOUT_split_3x6_3(
-  //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-      _______, XXXXXXX, _______, XXXXXXX, XXXXXXX, XXXXXXX,                       B_SRCH,  B_BACK,  B_PREV,  B_NEXT,  B_FWRD, _______,
-  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
-  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
-  //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          _______, _______, _______,    _______, _______, _______
                                       //`--------------------------'  `--------------------------'
   ),
 
@@ -195,6 +178,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                       //`--------------------------'  `--------------------------'
   ),
 };
+
 
 void keyboard_post_init_user(void) {
     // Set Num Lock on at startup
@@ -262,8 +246,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
                 return handle_as(NXT_WND, record);
             case L_MEDIA:
                 return handle_as(WS_DEV, record);
-            case L_WEB:
-                return handle_as(WS_WEB, record);
             case KC_S:
                 return handle_as(WS_SYS, record);
             case KC_C:
@@ -312,15 +294,23 @@ bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
     }
 }
 
-const uint16_t PROGMEM leader_key_combo[] = {TMB_LL, TMB_RR, COMBO_END};
+const uint16_t PROGMEM leader_key_combo[] = {TMB_LR, TMB_RL, COMBO_END};
 const uint16_t PROGMEM cut_combo[] = {TMB_LR, KC_X, COMBO_END};
 const uint16_t PROGMEM copy_combo[] = {TMB_LR, KC_C, COMBO_END};
 const uint16_t PROGMEM paste_combo[] = {TMB_LR, KC_V, COMBO_END};
+const uint16_t PROGMEM delete_combo[] = {TMB_LM, KC_D, COMBO_END};
+const uint16_t PROGMEM tab_combo[] = {TMB_LM, CTRL_T, COMBO_END};
+const uint16_t PROGMEM caps_words_combo[] = {SFT_S, SFT_E, COMBO_END};
+const uint16_t PROGMEM altgr_combo[] = {TMB_LM, TMB_RM, COMBO_END};
 combo_t key_combos[] = {
     COMBO(leader_key_combo, QK_LEAD),
     COMBO(cut_combo, LCTL(KC_X)),
     COMBO(copy_combo, LCTL(KC_C)),
     COMBO(paste_combo, LCTL(KC_V)),
+    COMBO(delete_combo, KC_DEL),
+    COMBO(tab_combo, KC_TAB),
+    COMBO(caps_words_combo, CW_TOGG),
+    COMBO(altgr_combo, OSM(MOD_RALT)),
 };
 
 void leader_end_user(void) {
