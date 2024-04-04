@@ -85,13 +85,6 @@ enum layers {
 #define SRNK    XXXXXXX
 #define EXPND   XXXXXXX
 
-#define WS_WEB KC_1
-#define WS_DEV KC_2
-#define WS_SYS KC_3
-#define WS_CHT KC_4
-#define WS_MND KC_5
-
-
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_COLEMAK_DH] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
@@ -261,14 +254,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
                 return handle_as(PRV_WND, record);
             case KC_DOWN:
                 return handle_as(NXT_WND, record);
-            case L_MEDIA:
-                return handle_as(WS_DEV, record);
-            case KC_S:
-                return handle_as(WS_SYS, record);
-            case KC_C:
-                return handle_as(WS_CHT, record);
-            case KC_B:
-                return handle_as(WS_MND, record);
         }
     }
 
