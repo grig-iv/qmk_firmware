@@ -188,6 +188,24 @@ void keyboard_post_init_user(void) {
 static bool is_usr_mod_on = false;
 static bool is_linux_sysetm = false;
 
+bool process_detected_host_os_kb(os_variant_t detected_os) {
+    if (!process_detected_host_os_user(detected_os)) {
+        return false;
+    }
+    switch (detected_os) {
+        case OS_WINDOWS:
+            is_linux_sysetm = false;
+            break;
+        case OS_LINUX:
+            is_linux_sysetm = true;
+            break;
+        default:
+            break;
+    }
+    
+    return true;
+}
+
 void activate_user_mod(void){
     if (is_linux_sysetm) {
         register_code(KC_LGUI);
