@@ -38,7 +38,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define HOLD_ON_OTHER_KEY_PRESS_PER_KEY
 #define PERMISSIVE_HOLD_PER_KEY
 
-#define LEADER_TIMEOUT 250
+#define LEADER_TIMEOUT 400
 #define LEADER_PER_KEY_TIMING
 
 #ifdef RGBLIGHT_ENABLE

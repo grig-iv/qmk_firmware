@@ -60,7 +60,6 @@ enum layers {
 #define B_NEXT C(KC_PGDN)
 #define B_BACK KC_F19
 #define B_FWRD KC_F22
-#define B_SRCH KC_WSCH
 
 // Mouse
 #define L_MOUSE MO(_MOUSE)
@@ -295,17 +294,13 @@ bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
 }
 
 const uint16_t PROGMEM leader_key_combo[] = {TMB_LR, TMB_RL, COMBO_END};
-const uint16_t PROGMEM cut_combo[] = {TMB_LR, KC_X, COMBO_END};
-const uint16_t PROGMEM copy_combo[] = {TMB_LR, KC_C, COMBO_END};
-const uint16_t PROGMEM paste_combo[] = {TMB_LR, KC_V, COMBO_END};
+const uint16_t PROGMEM paste_combo[] = {TMB_LM, KC_V, COMBO_END};
 const uint16_t PROGMEM delete_combo[] = {TMB_LM, KC_D, COMBO_END};
 const uint16_t PROGMEM tab_combo[] = {TMB_LM, CTRL_T, COMBO_END};
 const uint16_t PROGMEM caps_words_combo[] = {SFT_S, SFT_E, COMBO_END};
 const uint16_t PROGMEM altgr_combo[] = {TMB_LM, TMB_RM, COMBO_END};
 combo_t key_combos[] = {
     COMBO(leader_key_combo, QK_LEAD),
-    COMBO(cut_combo, LCTL(KC_X)),
-    COMBO(copy_combo, LCTL(KC_C)),
     COMBO(paste_combo, LCTL(KC_V)),
     COMBO(delete_combo, KC_DEL),
     COMBO(tab_combo, KC_TAB),
