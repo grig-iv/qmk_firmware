@@ -7,7 +7,6 @@ enum custom_keycodes {
 
 enum layers {
   _COLEMAK_DH,
-  _QWERTY,
   _SYM,
   _NUM,
   _NAV,
@@ -38,10 +37,6 @@ enum layers {
 #define SFT_E RSFT_T(KC_E)
 #define ALT_I LALT_T(KC_I)
 #define GUI_O RGUI_T(KC_O)
-
-// Layout switch
-#define DF_QWRT DF(_QWERTY)
-#define DF_CLMK DF(_COLEMAK_DH)
 
 // Symbols
 #define LCBRC S(KC_LBRC)
@@ -116,25 +111,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                       //`--------------------------'  `--------------------------'
   ),
 
-  [_QWERTY] = LAYOUT_split_3x6_3(
-  //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-      KC_LWIN,    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                         KC_Y,    KC_U,    KC_I,    KC_O,    KC_P, KC_RWIN,
-  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_LSFT,    KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                         KC_H,    KC_J,    KC_K,    KC_L, KC_SCLN, KC_RSFT,
-  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_LALT,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                         KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH, KC_RALT,
-  //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                            TMB_LL, TMB_LM,  TMB_LR,     TMB_RL,  TMB_RM,  TMB_RR
-                                      //`--------------------------'  `--------------------------'
-  ),
-
   [_SYM] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-      _______, KC_GRV,  LCBRC,    RCBRC,   TILDE,     XOR,                      S(KC_3), S(KC_4), S(KC_5), S(KC_2), KC_BSLS, _______,
+      _______, KC_GRV,  LCBRC,    RCBRC,   TILDE,     XOR,                      S(KC_3), S(KC_4), S(KC_5), S(KC_2),  XXXXXXX, _______,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       _______, DB_QUOT,  LPRNTH,  RPRNTH, KC_SCLN,     AND,                        LABRC, KC_MINS,    PLUS,  KC_EQL,   RABRC, _______,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      _______, KC_QUOT, KC_LBRC, KC_RBRC,     CLN,      OR,                         ASTR,   UNDRL,   EXCLM,    QSTN, KC_SLSH, _______,
+      _______, KC_QUOT, KC_LBRC, KC_RBRC,     CLN,      OR,                         ASTR,   UNDRL,   EXCLM,    QSTN, KC_BSLS, _______,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                           _______, _______, _______,    _______, _______, _______
                                       //`--------------------------'  `--------------------------'
@@ -311,6 +294,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
 bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case TMB_LL:
+        case TMB_LM:
+        case TMB_RL:
         case TMB_RR:
             return true;
         default:
@@ -328,18 +313,18 @@ bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
 }
 
 const uint16_t PROGMEM leader_key_combo[] = {TMB_LL, TMB_RR, COMBO_END};
-const uint16_t PROGMEM paste_combo[] = {TMB_LR, CTRL_T, COMBO_END};
+const uint16_t PROGMEM cut_combo[] = {TMB_LR, KC_X, COMBO_END};
+const uint16_t PROGMEM copy_combo[] = {TMB_LR, KC_C, COMBO_END};
+const uint16_t PROGMEM paste_combo[] = {TMB_LR, KC_V, COMBO_END};
 combo_t key_combos[] = {
     COMBO(leader_key_combo, QK_LEAD),
+    COMBO(cut_combo, LCTL(KC_X)),
+    COMBO(copy_combo, LCTL(KC_C)),
     COMBO(paste_combo, LCTL(KC_V)),
 };
 
 void leader_end_user(void) {
-    if (leader_sequence_two_keys(KC_L, KC_Q)) { // [L]ayout [Q]werty
-        default_layer_set(1U << _QWERTY);
-    } else if (leader_sequence_two_keys(KC_L, KC_C)) { // [L]ayout [C]olemak
-        default_layer_set(1U << _COLEMAK_DH);
-    } else if (leader_sequence_two_keys(KC_S, KC_L)) { // [S]ystem [L]inux
+    if (leader_sequence_two_keys(KC_S, KC_L)) { // [S]ystem [L]inux
         is_linux_sysetm = true;
     } else if (leader_sequence_two_keys(KC_S, KC_W)) { // [S]ystem [W]indows
         is_linux_sysetm = false;
