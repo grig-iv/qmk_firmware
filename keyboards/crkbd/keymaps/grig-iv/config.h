@@ -20,25 +20,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-// Mouse setup
-#define MK_COMBINED
-
-// 60hz 1600px
-#define MOUSEKEY_INTERVAL 16
-#define MOUSEKEY_MAX_SPEED 3
-// 144hz 2k
-// #define MOUSEKEY_INTERVAL 7
-// #define MOUSEKEY_MAX_SPEED 7
-// #define MOUSEKEY_TIME_TO_MAX 100
-
 #define MASTER_LEFT
-#define BOTH_SHIFTS_TURNS_ON_CAPS_WORD
 
 #define TAPPING_TERM 150
 #define TAPPING_TERM_PER_KEY
 #define HOLD_ON_OTHER_KEY_PRESS_PER_KEY
 #define PERMISSIVE_HOLD_PER_KEY
-
+#define BOTH_SHIFTS_TURNS_ON_CAPS_WORD
+#define MK_COMBINED
+#define SWAP_HANDS_ENABLE
 #define LEADER_TIMEOUT 400
 #define LEADER_PER_KEY_TIMING
 
@@ -60,4 +50,3 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     #define RGBLIGHT_VAL_STEP 17
 #endif
 
-#define OLED_FONT_H "keyboards/crkbd/lib/glcdfont.c"
