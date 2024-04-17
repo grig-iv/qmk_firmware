@@ -17,8 +17,8 @@ enum custom_keycodes {
 // Thumb row mods
 #define TMB_LM LT(SYM, KC_BSPC)
 #define TMB_LR LT(NUM, KC_ESC)
-#define TMB_RL LT(FUN, KC_ENT)
-#define TMB_RM LT(NAV, KC_SPC)
+#define TMB_RL LT(FUN, KC_SPC)
+#define TMB_RM LT(NAV, KC_ENT)
 
 // Base
 #define GUI_A LGUI_T(KC_A)
@@ -29,6 +29,8 @@ enum custom_keycodes {
 #define SFT_E RSFT_T(KC_E)
 #define ALT_I LALT_T(KC_I)
 #define GUI_O RGUI_T(KC_O)
+
+#define OS_ALGR OSM(MOD_RALT)
 
 // Nav
 #define B_PREV C(KC_PGUP)
@@ -48,7 +50,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,-----------------------------------------------------.        ,-----------------------------------------------------.
       _______,    KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,             KC_J,    KC_L,    KC_U,    KC_Y, _______, _______,
       _______,   GUI_A,   ALT_R,   SFT_S,  CTRL_T,    KC_G,             KC_M,   CTL_N,   SFT_E,   ALT_I,   GUI_O, _______,
-      _______,    KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,             KC_K,    KC_H, KC_COMM,  KC_DOT, KC_ALGR, _______,
+      _______,    KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,             KC_K,    KC_H, KC_COMM,  KC_DOT, OS_ALGR, _______,
                                  _______,  TMB_LM,  TMB_LR,           TMB_RL,  TMB_RM,  _______
    ),                        //`--------------------------'        `--------------------------'
 
@@ -72,7 +74,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,-----------------------------------------------------.        ,-----------------------------------------------------.
       _______,   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,            KC_F6,   KC_F7,   KC_F8,   KC_F9,  KC_F10, _______,
       _______, XXXXXXX, RGB_TOG, XXXXXXX, XXXXXXX, XXXXXXX,          KC_MUTE, KC_PSCR, XXXXXXX,  KC_INS, XXXXXXX, _______,
-      _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,  KC_F11,           KC_F12, XXXXXXX, KC_VOLU, KC_VOLD, XXXXXXX, _______,
+      _______, XXXXXXX, XXXXXXX, CW_TOGG, XXXXXXX,  KC_F11,           KC_F12, XXXXXXX, KC_VOLU, KC_VOLD, XXXXXXX, _______,
                                  _______, _______, _______,          _______, _______, _______
    ),                        //`--------------------------'        `--------------------------'
 
@@ -114,11 +116,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
         case CH_LANG:
             if (record->event.pressed) {
                 register_code(KC_LALT);
-                wait_ms(30);
+                wait_ms(25);
                 register_code(KC_LSFT);
             } else {
                 unregister_code(KC_LSFT);
-                wait_ms(30);
+                wait_ms(25);
                 unregister_code(KC_LALT);
             }
             return false;
@@ -129,10 +131,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
 
 
 // COMBOS
-const uint16_t PROGMEM caps_words_combo[] = {SFT_S, SFT_E, COMBO_END};
 const uint16_t PROGMEM ch_lang_combo[] = {TMB_LM, TMB_RM, COMBO_END};
 combo_t key_combos[] = {
-    COMBO(caps_words_combo, CW_TOGG),
     COMBO(ch_lang_combo, CH_LANG),
 };
 
