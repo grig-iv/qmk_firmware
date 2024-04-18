@@ -1,6 +1,10 @@
 #include QMK_KEYBOARD_H
 #include <stdio.h>
 
+#ifdef CONSOLE_ENABLE
+#include "print.h"
+#endif
+
 enum layers {
   BASE,
   SYM,
@@ -109,6 +113,20 @@ bool process_detected_host_os_kb(os_variant_t detected_os) {
 
 // CUSTOM LOGIC
 bool process_record_user(uint16_t keycode, keyrecord_t* record) {
+    #ifdef CONSOLE_ENABLE
+        const bool is_combo = record->event.type == COMBO_EVENT;
+        uprintf("0x%04X,%u,%u,%u,%b,0x%02X,0x%02X,%u\n",
+             keycode,
+             is_combo ? 254 : record->event.key.row,
+             is_combo ? 254 : record->event.key.col,
+             get_highest_layer(layer_state),
+             record->event.pressed,
+             get_mods(),
+             get_oneshot_mods(),
+             record->tap.count
+             );
+    #endif
+
     // language change
     switch (keycode) {
         case CH_LANG:
