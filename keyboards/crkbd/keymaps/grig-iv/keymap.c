@@ -157,7 +157,6 @@ combo_t key_combos[] = {
 bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case TMB_LL:
-        // case TMB_LM:
         case TMB_LR:
         case TMB_RL:
         case TMB_RM:
@@ -170,12 +169,8 @@ bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
 
 bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        // case TMB_LL:
-        case TMB_LM:
-        // case TMB_LR:
-        // case TMB_RL:
-        // case TMB_RM:
-        // case TMB_RR:
+        case SFT_F:
+        case SFT_U:
             return true;
         default:
             return false;
@@ -189,7 +184,7 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
             return TAPPING_TERM + 50;
         case SFT_F:
         case SFT_U:
-            return TAPPING_TERM + 30;
+            return TAPPING_TERM - 30;
         default:
             return TAPPING_TERM;
     }
