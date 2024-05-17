@@ -27,6 +27,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define HOLD_ON_OTHER_KEY_PRESS_PER_KEY
 #define PERMISSIVE_HOLD_PER_KEY
 #define MK_COMBINED
+#define BOTH_SHIFTS_TURNS_ON_CAPS_WORD
 
 #ifdef RGBLIGHT_ENABLE
     #define RGBLIGHT_LAYERS

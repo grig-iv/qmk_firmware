@@ -14,7 +14,7 @@ enum layers {
 };
 
 enum custom_keycodes {
-    CH_LANG = SAFE_RANGE
+    CH_LNG = SAFE_RANGE
 };
 
 
@@ -28,12 +28,11 @@ enum custom_keycodes {
 
 // Base
 #define GUI_W LGUI_T(KC_W)
-#define ALT_Z LALT_T(KC_Z)
-#define SFT_F LSFT_T(KC_F)
+#define ALT_F LALT_T(KC_F)
 #define CTRL_D LCTL_T(KC_D)
 #define CTRL_H RCTL_T(KC_H)
-#define SFT_U RSFT_T(KC_U)
-#define ALT_SLSH LALT_T(KC_SLSH)
+#define SFT_SLSH RSFT_T(KC_SLSH)
+#define ALT_U LALT_T(KC_U)
 #define GUI_Y RGUI_T(KC_Y)
 
 // Nav
@@ -52,9 +51,9 @@ enum custom_keycodes {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [BASE] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.        ,-----------------------------------------------------.
-      _______,    KC_Q,   GUI_W,   SFT_F,    KC_P,    KC_B,             KC_J,    KC_L,   SFT_U,   GUI_Y, _______, _______,
+      _______,    KC_Q,   GUI_W,   ALT_F,    KC_P,    KC_B,             KC_J,    KC_L,   ALT_U,   GUI_Y,    KC_Z, _______,
       _______,    KC_A,    KC_R,    KC_S,    KC_T,    KC_G,             KC_M,    KC_N,    KC_E,    KC_I,    KC_O, _______,
-      _______,   ALT_Z,    KC_X,    KC_C,  CTRL_D,    KC_V,             KC_K,  CTRL_H, KC_COMM,  KC_DOT,ALT_SLSH, _______,
+      _______, KC_LSFT,    KC_X,    KC_C,  CTRL_D,    KC_V,             KC_K,  CTRL_H, KC_COMM,  KC_DOT,SFT_SLSH, _______,
                                   TMB_LL,  TMB_LM,  TMB_LR,           TMB_RL,  TMB_RM,  TMB_RR
    ),                        //`--------------------------'        `--------------------------'
 
@@ -129,7 +128,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
 
     // language change
     switch (keycode) {
-        case CH_LANG:
+        case CH_LNG:
             if (record->event.pressed) {
                 register_code(KC_LALT);
                 wait_ms(25);
@@ -149,7 +148,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
 // COMBOS
 const uint16_t PROGMEM ch_lang_combo[] = {TMB_LM, TMB_RM, COMBO_END};
 combo_t key_combos[] = {
-    COMBO(ch_lang_combo, CH_LANG),
+    COMBO(ch_lang_combo, CH_LNG),
 };
 
 
@@ -161,16 +160,7 @@ bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
         case TMB_RL:
         case TMB_RM:
         case TMB_RR:
-            return true;
-        default:
-            return false;
-    }
-}
-
-bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
-    switch (keycode) {
-        case SFT_F:
-        case SFT_U:
+        case SFT_SLSH:
             return true;
         default:
             return false;
@@ -182,9 +172,6 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         case GUI_W:
         case GUI_Y:
             return TAPPING_TERM + 50;
-        case SFT_F:
-        case SFT_U:
-            return TAPPING_TERM - 30;
         default:
             return TAPPING_TERM;
     }
