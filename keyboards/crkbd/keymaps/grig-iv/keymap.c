@@ -32,6 +32,7 @@ enum custom_keycodes {
 #define CTRL_D LCTL_T(KC_D)
 #define CTRL_H RCTL_T(KC_H)
 #define SFT_SLSH RSFT_T(KC_SLSH)
+#define SFT_Z LSFT_T(KC_Z)
 #define ALT_U LALT_T(KC_U)
 #define GUI_Y RGUI_T(KC_Y)
 
@@ -51,9 +52,9 @@ enum custom_keycodes {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [BASE] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.        ,-----------------------------------------------------.
-      _______,    KC_Q,   GUI_W,   ALT_F,    KC_P,    KC_B,             KC_J,    KC_L,   ALT_U,   GUI_Y,    KC_Z, _______,
+      _______,    KC_Q,   GUI_W,   ALT_F,    KC_P,    KC_B,             KC_J,    KC_L,   ALT_U,   GUI_Y, _______, _______,
       _______,    KC_A,    KC_R,    KC_S,    KC_T,    KC_G,             KC_M,    KC_N,    KC_E,    KC_I,    KC_O, _______,
-      _______, KC_LSFT,    KC_X,    KC_C,  CTRL_D,    KC_V,             KC_K,  CTRL_H, KC_COMM,  KC_DOT,SFT_SLSH, _______,
+      _______,   SFT_Z,    KC_X,    KC_C,  CTRL_D,    KC_V,             KC_K,  CTRL_H, KC_COMM,  KC_DOT,SFT_SLSH, _______,
                                   TMB_LL,  TMB_LM,  TMB_LR,           TMB_RL,  TMB_RM,  TMB_RR
    ),                        //`--------------------------'        `--------------------------'
 
@@ -161,6 +162,7 @@ bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
         case TMB_RM:
         case TMB_RR:
         case SFT_SLSH:
+        case SFT_Z:
             return true;
         default:
             return false;
@@ -171,7 +173,7 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case GUI_W:
         case GUI_Y:
-            return TAPPING_TERM + 50;
+            return TAPPING_TERM + 30;
         default:
             return TAPPING_TERM;
     }
