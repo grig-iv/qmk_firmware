@@ -52,9 +52,9 @@ enum custom_keycodes {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [BASE] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.        ,-----------------------------------------------------.
-      _______,    KC_Q,   GUI_W,   ALT_F,    KC_P,    KC_B,             KC_J,    KC_L,   ALT_U,   GUI_Y, _______, _______,
+      _______,    KC_Q,   GUI_W,   ALT_F,    KC_P,    KC_B,             KC_J,    KC_L,   ALT_U,   GUI_Y,    KC_Z, _______,
       _______,    KC_A,    KC_R,    KC_S,    KC_T,    KC_G,             KC_M,    KC_N,    KC_E,    KC_I,    KC_O, _______,
-      _______,   SFT_Z,    KC_X,    KC_C,  CTRL_D,    KC_V,             KC_K,  CTRL_H, KC_COMM,  KC_DOT,SFT_SLSH, _______,
+      _______, KC_LSFT,    KC_X,    KC_C,  CTRL_D,    KC_V,             KC_K,  CTRL_H, KC_COMM,  KC_DOT,SFT_SLSH, _______,
                                   TMB_LL,  TMB_LM,  TMB_LR,           TMB_RL,  TMB_RM,  TMB_RR
    ),                        //`--------------------------'        `--------------------------'
 
@@ -77,7 +77,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [FUN] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.        ,-----------------------------------------------------.
       _______,   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,            KC_F6,   KC_F7,   KC_F8,   KC_F9,  KC_F10, _______,
-      _______, XXXXXXX, RGB_TOG, XXXXXXX, XXXXXXX, XXXXXXX,          KC_MUTE, KC_PSCR, XXXXXXX,  KC_INS, XXXXXXX, _______,
+      _______, XXXXXXX, RGB_TOG, XXXXXXX,  CH_LNG, XXXXXXX,          KC_MUTE, KC_PSCR, XXXXXXX,  KC_INS, XXXXXXX, _______,
       _______, XXXXXXX, XXXXXXX, CW_TOGG, XXXXXXX,  KC_F11,           KC_F12, XXXXXXX, KC_VOLU, KC_VOLD, XXXXXXX, _______,
                                  _______, _______, _______,          _______, _______, _______
    ),                        //`--------------------------'        `--------------------------'
@@ -179,6 +179,14 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     }
 }
 
+uint16_t get_quick_tap_term(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case SFT_SLSH:
+            return 0;
+        default:
+            return QUICK_TAP_TERM;
+    }
+}
 
 // INIT
 void keyboard_post_init_user(void) {
