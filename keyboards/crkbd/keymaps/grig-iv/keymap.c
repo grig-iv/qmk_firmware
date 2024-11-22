@@ -1,3 +1,5 @@
+// clang-format off
+
 #include QMK_KEYBOARD_H
 #include <stdio.h>
 
