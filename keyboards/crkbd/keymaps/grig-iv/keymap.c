@@ -54,9 +54,9 @@ enum custom_keycodes {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [BASE] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.        ,-----------------------------------------------------.
-      _______,    KC_Q,   GUI_W,   ALT_F,    KC_P,    KC_B,             KC_J,    KC_L,   ALT_U,   GUI_Y,    KC_Z, _______,
-      _______,    KC_A,    KC_R,    KC_S,    KC_T,    KC_G,             KC_M,    KC_N,    KC_E,    KC_I,    KC_O, _______,
-      _______, KC_LSFT,    KC_X,    KC_C,  CTRL_D,    KC_V,             KC_K,  CTRL_H, KC_COMM,  KC_DOT, KC_RSFT, _______,
+      KC_VOLU,    KC_Q,   GUI_W,   ALT_F,    KC_P,    KC_B,             KC_J,    KC_L,   ALT_U,   GUI_Y,    KC_Z, _______,
+      KC_MPLY,    KC_A,    KC_R,    KC_S,    KC_T,    KC_G,             KC_M,    KC_N,    KC_E,    KC_I,    KC_O,LAG(KC_S),
+      KC_VOLD, KC_LSFT,    KC_X,    KC_C,  CTRL_D,    KC_V,             KC_K,  CTRL_H, KC_COMM,  KC_DOT, KC_RSFT, _______,
                                   TMB_LL,  TMB_LM,  TMB_LR,           TMB_RL,  TMB_RM,  TMB_RR
    ),                        //`--------------------------'        `--------------------------'
 
